@@ -1,0 +1,11 @@
+{
+  "name": "APIS",
+  "description": "List of APIS for fun",
+  "keywords": [
+    "nodejs",
+    "express"
+  ],
+
+  "repository": "https://github.com/GulTion/apis.git",
+  "logo": "https://nodejs.org/images/logos/nodejs.png"
+}
