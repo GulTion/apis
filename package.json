@@ -17,8 +17,6 @@
     "libgen": "^2.0.2",
     "nodemon": "^2.0.4",
     "request": "^2.88.2"
-    
-   
   },
   "engines": {
     "node": "10.21.0"

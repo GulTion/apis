@@ -42,7 +42,7 @@ app.post('/libgen',async (req,res)=>{
     pages:e.pages,
     language:e.language,
     md5:e.md5,
-    cover:`http://library.lol/covers/${e.coverurl}`,
+    cover:`http://libgen.lc/covers/${e.coverurl}`,
     descr:e.descr,
     filesize:e.filesize,
     extension:e.extension
