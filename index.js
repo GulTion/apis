@@ -43,8 +43,8 @@ app.post('/libgen',async (req,res)=>{
     cover:`http://library.lol/covers/${e.coverurl}`,
     descr:e.descr,
     filesize:e.filesize,
-    extension:e.extension,
-    download:
+    extension:e.extension
+
     })
   }
 
