@@ -1,6 +1,8 @@
 const express = require('express');
 const libgen = require('libgen')
 const app = express();
+
+const axios = require('axios')
 var request = require("request");
 var bodyParser = require('body-parser')
 app.use(bodyParser.json())
@@ -50,8 +52,22 @@ app.post('/libgen',async (req,res)=>{
 
 
 
+
 console.log(arr)
   res.json(arr)
+})
+app.get('/book/:md5',(res,req)=>{
+  axios.get(`http://library.lol/main/${res.params.md5.toUpperCase()}`)
+  .then(re=>{
+
+      const patt = new RegExp(`http://93.174.95.29/main.*\"`);
+      var ret = patt.exec(re.data);
+
+    req.send(ret[0])
+    }
+  )
+  .catch(err=>req.send(" NOT Found"))
+
 })
 app.get('/csalgo',(req,res)=>{
 console.log(`calling for ${req.query.url}`)
