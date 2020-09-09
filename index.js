@@ -11,14 +11,47 @@ app.use(function(req, res, next) {
   });
 
 app.get('/', (req,res)=>{
-	res.send(`<h1>You are in  ${req.query.name} Change from vscode</h1>`)
+	res.send(`<h1>Welcome to GulTion API</h1>`)
 })
+function urlDown(md5){
+  try{
+  const c = libgen.utils.check.canDownload(md5);
+  return c
+  }
+  catch(err){
+    console.log(err)
+  }
+}
 app.post('/libgen',async (req,res)=>{
 
   console.log("Searching for "+req.body.query)
   const books =await libgen.search(req.body)
+
   console.log('Complete')
-  res.json(books)
+  const arr = []
+  console.log(books)
+  for(let e of books){
+    arr.push({
+    title:e.title,
+    author:e.author,
+    year:e.year,
+    edition:e.edition,
+    publisher:e.publisher,
+    pages:e.pages,
+    language:e.language,
+    md5:e.md5,
+    cover:`http://library.lol/covers/${e.coverurl}`,
+    descr:e.descr,
+    filesize:e.filesize,
+    extension:e.extension,
+    download:
+    })
+  }
+
+
+
+console.log(arr)
+  res.json(arr)
 })
 app.get('/csalgo',(req,res)=>{
 console.log(`calling for ${req.query.url}`)
