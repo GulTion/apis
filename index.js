@@ -54,6 +54,7 @@ app.post('/libgen',async (req,res)=>{
 
 
 console.log(arr)
+console.log(books)
   res.json(arr)
   }
   catch(err){
