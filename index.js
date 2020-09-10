@@ -25,7 +25,7 @@ function urlDown(md5){
   }
 }
 app.post('/libgen',async (req,res)=>{
-
+  try{
   console.log("Searching for "+req.body.query)
   const books =await libgen.search(req.body)
 
@@ -55,6 +55,11 @@ app.post('/libgen',async (req,res)=>{
 
 console.log(arr)
   res.json(arr)
+  }
+  catch(err){
+    console.log(err)
+  }
+
 })
 app.get('/book/:md5',(res,req)=>{
   axios.get(`http://library.lol/main/${res.params.md5.toUpperCase()}`)
@@ -66,7 +71,7 @@ app.get('/book/:md5',(res,req)=>{
     req.send(ret[0])
     }
   )
-  .catch(err=>req.send(" NOT Found"))
+  .catch(err=>req.send(err))
 
 })
 app.get('/csalgo',(req,res)=>{
