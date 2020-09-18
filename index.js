@@ -2,6 +2,14 @@ const express = require('express');
 const libgen = require('libgen')
 const app = express();
 
+
+// DataBase
+const JsonDB  = require('node-json-db');
+const Config = require('node-json-db/dist/lib/JsonDBConfig')
+ 
+const db = new JsonDB.JsonDB(new Config.Config("AEC", true, false, '/'))
+const libdb = new JsonDB.JsonDB(new Config.Config("LIB", true, false, '/'))
+// 
 const axios = require('axios')
 var request = require("request");
 var bodyParser = require('body-parser')
@@ -13,6 +21,8 @@ app.use(function(req, res, next) {
   });
 
 app.get('/', (req,res)=>{
+  db.push('/black/first[]',[Math.random(),Math.random(),Math.random()],true);
+  console.log(db.getData('/black/first'));
 	res.send(`<h1>Welcome to GulTion API</h1>`)
 })
 function urlDown(md5){
@@ -24,11 +34,18 @@ function urlDown(md5){
     console.log(err)
   }
 }
+app.get('/recentlib',(req,res)=>{
+  try{
+    res.json(libdb.getData('/recent'))
+  }catch(err){
+    console.log(err)
+  }
+})
 app.post('/libgen',async (req,res)=>{
   try{
   console.log("Searching for "+req.body.query)
   const books =await libgen.search(req.body)
-
+  libdb.push('/recent[]',{date:new Date().toLocaleString,bookName:req.body.query},true)
   console.log('Complete')
   const arr = []
   console.log(books)
@@ -96,6 +113,15 @@ request(options, function (error, response, body) {
 });
 
 })
+app.get('/cse',(r,s)=>{
+    db.push('/test',{arr:[1,2,3,4]});
+console.log(db.getData('/test'));
+  s.send('CSE')
+})
 app.listen(process.env.PORT||3001,()=>{                                                            
 	console.log('Server is Starting');
 })
+
+
+
+
